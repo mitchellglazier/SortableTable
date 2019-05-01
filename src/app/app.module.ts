@@ -48,12 +48,14 @@ import {
 } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
+import { AddProjectModelComponent } from './add-project-model/add-project-model.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableFilteringComponent,
     NotFoundComponent,
+    AddProjectModelComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,6 +105,9 @@ import { CdkTreeModule } from '@angular/cdk/tree';
     ])
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    AddProjectModelComponent
+  ]
 })
 export class AppModule { }

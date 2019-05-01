@@ -1,0 +1,43 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Project Owner">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Project Name">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="City">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="State">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput [matDatepicker]="bidDate" placeholder="Bid Date">
+    <mat-datepicker-toggle matSuffix [for]="bidDate"></mat-datepicker-toggle>
+    <mat-datepicker #bidDate></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput [matDatepicker]="completionDate" placeholder="Est. Completion">
+    <mat-datepicker-toggle matSuffix [for]="completionDate"></mat-datepicker-toggle>
+    <mat-datepicker #completionDate></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Estimate" type="number">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Stage">
+  </mat-form-field>
+
+  <div mat-dialog-actions>
+      <button mat-button (click)="close()">Cancel</button>
+      <button mat-button (click)="close()">Submit</button>
+  </div>
+
+</form>
