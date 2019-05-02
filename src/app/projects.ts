@@ -1,10 +1,10 @@
 export interface Projects {
     projectOwner?: string;
-    projectName?: string;
+    projectName: string;
     city?: string;
     state?: string;
-    bidDate?: string;
-    completionDate?: string;
+    bidDate?: Date;
+    completionDate?: Date;
     estimate?: number;
     stage?: string;
   }

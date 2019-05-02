@@ -2,12 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { AngularFireModule } from '@angular/fire';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
 import { TableFilteringComponent } from './table-filtering/table-filtering.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { environment } from '../environments/environment.prod';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import {
   MatAutocompleteModule,
@@ -49,6 +51,7 @@ import {
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { AddProjectModelComponent } from './add-project-model/add-project-model.component';
+import { ProjectService } from './project.service';
 
 @NgModule({
   declarations: [
@@ -58,9 +61,12 @@ import { AddProjectModelComponent } from './add-project-model/add-project-model.
     AddProjectModelComponent,
   ],
   imports: [
-    BrowserModule,
+  BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireDatabaseModule,
     ReactiveFormsModule,
     CdkTableModule,
     CdkTreeModule,
@@ -104,7 +110,7 @@ import { AddProjectModelComponent } from './add-project-model/add-project-model.
       { path: '**', component: NotFoundComponent},
     ])
   ],
-  providers: [],
+  providers: [ProjectService],
   bootstrap: [AppComponent],
   entryComponents: [
     AddProjectModelComponent
