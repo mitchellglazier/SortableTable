@@ -46,8 +46,10 @@
   </mat-form-field>
 
   <div mat-dialog-actions>
-      <!-- <button mat-button (click)="close()">Cancel</button> -->
       <button mat-button [disabled]="f.invalid">Submit</button>
   </div>
 
 </form>
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">Cancel</button>
+</div>

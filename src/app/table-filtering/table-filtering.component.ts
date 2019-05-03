@@ -3,212 +3,11 @@ import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { AddProjectModelComponent } from '../add-project-model/add-project-model.component';
 import { Projects } from '../Projects';
+import { ProjectService } from '../project.service';
 
-export let ELEMENT_DATA: Projects[] = [
-  {
-    projectOwner: 'M Guinn Glazier',
-    stage: 'Bid',
-    projectName: 'New Toilets',
-    city: 'Stansbury Park',
-    state: 'UT',
-    bidDate: new Date('12/17/2019'),
-    completionDate: new Date('10/01/2018'),
-    estimate: 53235
-  },
-  {
-    projectOwner: 'T Charles Metcalf',
-    stage: 'Won',
-    projectName: 'Build Building',
-    city: 'West Valley',
-    state: 'UT',
-    bidDate: new Date('12/15/2018'),
-    completionDate: new Date('05/05/2019'),
-    estimate: 53
-  },
-  {
-    projectOwner: '',
-    stage: 'Lost',
-    projectName: 'Clean Gutters',
-    city: 'Herriman',
-    state: 'NV',
-    bidDate: new Date('09/02/2018'),
-    completionDate: new Date('12/01/2018'),
-    estimate: 1000000
-  }
-  ,
-  {
-    projectOwner: 'R L Klay Jones',
-    stage: 'Possible Bid',
-    projectName: 'Panda Express Renovation',
-    city: 'Provo',
-    state: 'CA',
-    bidDate: new Date('03/06/2018'),
-    completionDate: new Date('10/01/2018'),
-    estimate: 621834
-  },
-  {
-    projectOwner: 'M Guinn Glazier',
-    stage: '',
-    projectName: 'Build Bike',
-    city: 'Kanab',
-    state: 'CA',
-    bidDate: new Date('08/12/2018'),
-    completionDate: new Date('10/01/2018'),
-    estimate: 999999
-  },
-  {
-    projectOwner: 'T Charles Metcalf',
-    stage: 'Won',
-    projectName: 'Laundry',
-    city: 'St. George',
-    state: 'CA',
-    bidDate: new Date('11/23/2018'),
-    completionDate: new Date(''),
-    estimate: 13215
-  },
-  {
-    projectOwner: 'M Guinn Glazier',
-    stage: 'Lost',
-    projectName: 'Hunting',
-    city: 'Tooele',
-    state: 'HI',
-    bidDate: new Date('01/12/2018'),
-    completionDate: new Date('07/01/2018'),
-    estimate: 153215
-  },
-  {
-    projectOwner: 'R L Klay Jones',
-    stage: 'Possible Bid',
-    projectName: 'Drive to Cedar',
-    city: 'Cedar City',
-    state: 'AZ',
-    bidDate: new Date('02/14/2018'),
-    completionDate: new Date('08/10/2018'),
-    estimate: 1212
-  },
-  {
-    projectOwner: 'M Guinn Glazier',
-    stage: 'Bid',
-    projectName: 'Wash Dishes',
-    city: 'Kanab',
-    state: 'MA',
-    bidDate: new Date('08/29/2018'),
-    completionDate: new Date('10/01/2018'),
-    estimate: 12000
-  },
-  {
-    projectOwner: 'T Charles Metcalf',
-    stage: 'Won',
-    projectName: 'Carpet Cleaning',
-    city: 'Cedar City',
-    state: 'NY',
-    bidDate: new Date('10/15/2018'),
-    completionDate: new Date('10/16/2018'),
-    estimate: 1311200
-  },
-  {
-    projectOwner: 'M Guinn Glazier',
-    stage: 'Bid',
-    projectName: 'New Toilets',
-    city: 'Stansbury Park',
-    state: 'UT',
-    bidDate: new Date('07/30/2018'),
-    completionDate: new Date('10/01/2018'),
-    estimate: 53235
-  },
-  {
-    projectOwner: 'T Charles Metcalf',
-    stage: 'Won',
-    projectName: 'Build Building',
-    city: 'West Valley',
-    state: 'UT',
-    bidDate: new Date('12/15/2018'),
-    completionDate: new Date('05/05/2019'),
-    estimate: 53
-  },
-  {
-    projectOwner: 'R L Klay Jones',
-    stage: 'Lost',
-    projectName: 'Clean Gutters',
-    city: 'Herriman',
-    state: 'NV',
-    bidDate: new Date('09/02/2018'),
-    completionDate: new Date('12/01/2018'),
-    estimate: 1000000
-  }
-  ,
-  {
-    projectOwner: 'R L Klay Jones',
-    stage: 'Possible Bid',
-    projectName: 'Panda Express Renovation',
-    city: 'Provo',
-    state: 'CA',
-    bidDate: new Date('03/06/2018'),
-    completionDate: new Date('10/01/2018'),
-    estimate: 621834
-  },
-  {
-    projectOwner: 'M Guinn Glazier',
-    stage: 'Bid',
-    projectName: 'Build Bike',
-    city: 'Kanab',
-    state: 'CA',
-    bidDate: new Date('08/12/2018'),
-    completionDate: new Date('10/01/2018'),
-    estimate: 999999
-  },
-  {
-    projectOwner: 'T Charles Metcalf',
-    stage: 'Won',
-    projectName: 'Laundry',
-    city: 'St. George',
-    state: 'CA',
-    bidDate: new Date('11/23/2018'),
-    completionDate: new Date('06/01/2019'),
-    estimate: 13215
-  },
-  {
-    projectOwner: 'M Guinn Glazier',
-    stage: 'Lost',
-    projectName: 'Hunting',
-    city: 'Tooele',
-    state: 'HI',
-    bidDate: new Date('01/12/2018'),
-    completionDate: new Date('07/01/2018'),
-    estimate: 153215
-  },
-  {
-    projectOwner: 'R L Klay Jones',
-    stage: 'Possible Bid',
-    projectName: 'Drive to Cedar',
-    city: 'Cedar City',
-    state: 'AZ',
-    bidDate: new Date('02/14/2018'),
-    completionDate: new Date('08/10/2018'),
-    estimate: 1212
-  },
-  {
-    projectOwner: 'M Guinn Glazier',
-    stage: 'Bid',
-    projectName: 'Wash Dishes',
-    city: 'Kanab',
-    state: 'MA',
-    bidDate: new Date('08/29/2018'),
-    completionDate: new Date('10/01/2018'),
-    estimate: 12000
-  },
-  {
-    projectOwner: 'T Charles Metcalf',
-    stage: 'Won',
-    projectName: 'Carpet Cleaning',
-    city: 'Cedar City',
-    state: 'NY',
-    bidDate: new Date('10/15/2018'),
-    completionDate: new Date('10/16/2018'),
-    estimate: 1311200
-  },
+const ELEMENT_DATA: Projects[] = [
+
 ];
-
 
 @Component({
   selector: 'app-table-filtering',
@@ -217,6 +16,8 @@ export let ELEMENT_DATA: Projects[] = [
 })
 
 export class TableFilteringComponent implements OnInit {
+  
+  dataSource: MatTableDataSource<Projects>;
 
   displayedColumns: string[] = [
       'projectOwner',
@@ -243,8 +44,6 @@ export class TableFilteringComponent implements OnInit {
     'R L Klay Jones'
   ];
 
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   stageFilter = new FormControl();
@@ -262,53 +61,57 @@ export class TableFilteringComponent implements OnInit {
     state: '', bidDate: '', completionDate: '', estimate: ''
   };
 
-  constructor(public dialog: MatDialog) {}
+  projects$;
+
+  constructor(public dialog: MatDialog, private projectService: ProjectService) {
+    this.projects$ = this.projectService.getAll();
+  }
 
   ngOnInit() {
 
     this.projectOwnerFilter.valueChanges.subscribe((projectOwnerFilterValue) => {
       this.filteredValues.projectOwner = projectOwnerFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
+      this.projects$.filter = JSON.stringify(this.filteredValues);
     });
 
     this.stageFilter.valueChanges.subscribe((stageFilterValue) => {
       this.filteredValues.stage = stageFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
+      this.projects$.filter = JSON.stringify(this.filteredValues);
     });
 
     this.projectNameFilter.valueChanges.subscribe((projectNameFilterValue) => {
       this.filteredValues.projectName = projectNameFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
+      this.projects$.filter = JSON.stringify(this.filteredValues);
     });
 
     this.cityFilter.valueChanges.subscribe((cityFilterValue) => {
       this.filteredValues.city = cityFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
+      this.projects$.filter = JSON.stringify(this.filteredValues);
     });
 
     this.stateFilter.valueChanges.subscribe((stateFilterValue) => {
       this.filteredValues.state = stateFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
+      this.projects$.filter = JSON.stringify(this.filteredValues);
     });
 
     this.bidDateFilter.valueChanges.subscribe((bidDateFilterValue) => {
       this.filteredValues.bidDate = bidDateFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
+      this.projects$.filter = JSON.stringify(this.filteredValues);
     });
 
     this.completionDateFilter.valueChanges.subscribe((completionDateFilterValue) => {
       this.filteredValues.completionDate = completionDateFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
+      this.projects$.filter = JSON.stringify(this.filteredValues);
     });
 
     this.estimateFilter.valueChanges.subscribe((estimateFilterValue) => {
       this.filteredValues.estimate = estimateFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
+      this.projects$.filter = JSON.stringify(this.filteredValues);
     });
 
-    this.dataSource.filterPredicate = this.customFilterPredicate();
+    this.projects$.filterPredicate = this.customFilterPredicate();
 
-    this.dataSource.paginator = this.paginator;
+    this.projects$.paginator = this.paginator;
 
   }
 
@@ -319,7 +122,7 @@ export class TableFilteringComponent implements OnInit {
 
   applyFilter(filter) {
     this.globalFilter = filter;
-    this.dataSource.filter = JSON.stringify(this.filteredValues);
+    this.projects$.filter = JSON.stringify(this.filteredValues);
   }
 
   // numFilter(filterValue: string) {
