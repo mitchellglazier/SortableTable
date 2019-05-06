@@ -1,13 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import { MatPaginator, MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { AddProjectModelComponent } from '../add-project-model/add-project-model.component';
-import { Projects } from '../Projects';
 import { ProjectService } from '../project.service';
-
-const ELEMENT_DATA: Projects[] = [
-
-];
+import { AngularFireDatabase } from '@angular/fire/database';
+import { Projects } from '../Projects';
 
 @Component({
   selector: 'app-table-filtering',
@@ -16,8 +13,8 @@ const ELEMENT_DATA: Projects[] = [
 })
 
 export class TableFilteringComponent implements OnInit {
-  
-  dataSource: MatTableDataSource<Projects>;
+
+ dataSource: MatTableDataSource<any>;
 
   displayedColumns: string[] = [
       'projectOwner',
@@ -45,6 +42,7 @@ export class TableFilteringComponent implements OnInit {
   ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   stageFilter = new FormControl();
   projectNameFilter = new FormControl();
@@ -61,57 +59,57 @@ export class TableFilteringComponent implements OnInit {
     state: '', bidDate: '', completionDate: '', estimate: ''
   };
 
-  projects$;
-
-  constructor(public dialog: MatDialog, private projectService: ProjectService) {
-    this.projects$ = this.projectService.getAll();
+  constructor(public dialog: MatDialog, private projectService: ProjectService, private db: AngularFireDatabase) {
+    this.db.list<any>('/projects').valueChanges().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+    });
   }
 
   ngOnInit() {
 
     this.projectOwnerFilter.valueChanges.subscribe((projectOwnerFilterValue) => {
       this.filteredValues.projectOwner = projectOwnerFilterValue;
-      this.projects$.filter = JSON.stringify(this.filteredValues);
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
     });
 
     this.stageFilter.valueChanges.subscribe((stageFilterValue) => {
       this.filteredValues.stage = stageFilterValue;
-      this.projects$.filter = JSON.stringify(this.filteredValues);
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
     });
 
     this.projectNameFilter.valueChanges.subscribe((projectNameFilterValue) => {
       this.filteredValues.projectName = projectNameFilterValue;
-      this.projects$.filter = JSON.stringify(this.filteredValues);
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
     });
 
     this.cityFilter.valueChanges.subscribe((cityFilterValue) => {
       this.filteredValues.city = cityFilterValue;
-      this.projects$.filter = JSON.stringify(this.filteredValues);
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
     });
 
     this.stateFilter.valueChanges.subscribe((stateFilterValue) => {
       this.filteredValues.state = stateFilterValue;
-      this.projects$.filter = JSON.stringify(this.filteredValues);
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
     });
 
     this.bidDateFilter.valueChanges.subscribe((bidDateFilterValue) => {
       this.filteredValues.bidDate = bidDateFilterValue;
-      this.projects$.filter = JSON.stringify(this.filteredValues);
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
     });
 
     this.completionDateFilter.valueChanges.subscribe((completionDateFilterValue) => {
       this.filteredValues.completionDate = completionDateFilterValue;
-      this.projects$.filter = JSON.stringify(this.filteredValues);
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
     });
 
     this.estimateFilter.valueChanges.subscribe((estimateFilterValue) => {
       this.filteredValues.estimate = estimateFilterValue;
-      this.projects$.filter = JSON.stringify(this.filteredValues);
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
     });
 
-    this.projects$.filterPredicate = this.customFilterPredicate();
+    this.dataSource.filterPredicate = this.customFilterPredicate();
 
-    this.projects$.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator;
 
   }
 
@@ -122,17 +120,17 @@ export class TableFilteringComponent implements OnInit {
 
   applyFilter(filter) {
     this.globalFilter = filter;
-    this.projects$.filter = JSON.stringify(this.filteredValues);
+    this.dataSource.filter = JSON.stringify(this.filteredValues);
   }
 
-  // numFilter(filterValue: string) {
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  //   this.dataSource.filterPredicate = (data: any, fitlerString: string) => {
+//   numFilter(filterValue: string) {
+//     this.dataSource.filter = filterValue.trim().toLowerCase();
+//     this.dataSource.filterPredicate = (data: any, fitlerString: string) => {
 
-  //       return data.position == filterValue;
-  //   };
-  //   this.dataSource.filter = filterValue;
-  // }
+//         return data.position == filterValue;
+//     };
+//     this.dataSource.filter = filterValue;
+//  }
 
   customFilterPredicate() {
     const myFilterPredicate = (data: Projects, filter: string): boolean => {
