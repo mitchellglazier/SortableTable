@@ -1,10 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatDialog, MatTableDataSource, MatSort } from '@angular/material';
-import { FormControl } from '@angular/forms';
+import { Component } from '@angular/core';
+import { MatDialog, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { AddProjectModelComponent } from '../add-project-model/add-project-model.component';
-import { ProjectService } from '../project.service';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { Projects } from '../Projects';
+import { EditProjectModelComponent } from '../edit-project-model/edit-project-model.component';
 
 @Component({
   selector: 'app-table-filtering',
@@ -12,9 +10,9 @@ import { Projects } from '../Projects';
   styleUrls: ['./table-filtering.component.css']
 })
 
-export class TableFilteringComponent implements OnInit {
+export class TableFilteringComponent {
 
- dataSource: MatTableDataSource<any>;
+ data;
 
   displayedColumns: string[] = [
       'projectOwner',
@@ -26,7 +24,6 @@ export class TableFilteringComponent implements OnInit {
       'estimate',
       'stage',
     ];
-
 
   stages: string[] = [
     'Bid',
@@ -41,76 +38,12 @@ export class TableFilteringComponent implements OnInit {
     'R L Klay Jones'
   ];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  dataSource: MatTableDataSource<any>;
 
-  stageFilter = new FormControl();
-  projectNameFilter = new FormControl();
-  cityFilter = new FormControl();
-  stateFilter = new FormControl();
-  bidDateFilter = new FormControl();
-  completionDateFilter = new FormControl();
-  estimateFilter = new FormControl();
-  projectOwnerFilter = new FormControl();
-  globalFilter = '';
-
-  filteredValues = {
-    stage: '', projectName: '', city: '', projectOwner: '',
-    state: '', bidDate: '', completionDate: '', estimate: ''
-  };
-
-  constructor(public dialog: MatDialog, private projectService: ProjectService, private db: AngularFireDatabase) {
+  constructor(public dialog: MatDialog, private db: AngularFireDatabase) {
     this.db.list<any>('/projects').valueChanges().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
     });
-  }
-
-  ngOnInit() {
-
-    this.projectOwnerFilter.valueChanges.subscribe((projectOwnerFilterValue) => {
-      this.filteredValues.projectOwner = projectOwnerFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
-    });
-
-    this.stageFilter.valueChanges.subscribe((stageFilterValue) => {
-      this.filteredValues.stage = stageFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
-    });
-
-    this.projectNameFilter.valueChanges.subscribe((projectNameFilterValue) => {
-      this.filteredValues.projectName = projectNameFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
-    });
-
-    this.cityFilter.valueChanges.subscribe((cityFilterValue) => {
-      this.filteredValues.city = cityFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
-    });
-
-    this.stateFilter.valueChanges.subscribe((stateFilterValue) => {
-      this.filteredValues.state = stateFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
-    });
-
-    this.bidDateFilter.valueChanges.subscribe((bidDateFilterValue) => {
-      this.filteredValues.bidDate = bidDateFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
-    });
-
-    this.completionDateFilter.valueChanges.subscribe((completionDateFilterValue) => {
-      this.filteredValues.completionDate = completionDateFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
-    });
-
-    this.estimateFilter.valueChanges.subscribe((estimateFilterValue) => {
-      this.filteredValues.estimate = estimateFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
-    });
-
-    this.dataSource.filterPredicate = this.customFilterPredicate();
-
-    this.dataSource.paginator = this.paginator;
-
   }
 
   addNewProject() {
@@ -118,43 +51,26 @@ export class TableFilteringComponent implements OnInit {
     });
   }
 
-  applyFilter(filter) {
-    this.globalFilter = filter;
-    this.dataSource.filter = JSON.stringify(this.filteredValues);
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-//   numFilter(filterValue: string) {
-//     this.dataSource.filter = filterValue.trim().toLowerCase();
-//     this.dataSource.filterPredicate = (data: any, fitlerString: string) => {
+  editProject(row) {
+    const dialogConfig = new MatDialogConfig();
 
-//         return data.position == filterValue;
-//     };
-//     this.dataSource.filter = filterValue;
-//  }
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
 
-  customFilterPredicate() {
-    const myFilterPredicate = (data: Projects, filter: string): boolean => {
-      let globalMatch = !this.globalFilter;
+    dialogConfig.data = row;
+    console.log(row);
 
-      if (this.globalFilter) {
-        // search all text fields
-        globalMatch = data.projectName.toString().trim().toLowerCase().indexOf(this.globalFilter.toLowerCase()) !== -1;
-      }
-
-      if (!globalMatch) {
-        return;
-      }
-
-      const searchString = JSON.parse(filter);
-      return data.stage.toString().trim().indexOf(searchString.stage) !== -1 &&
-        data.projectName.toString().trim().toLowerCase().indexOf(searchString.projectName.toLowerCase()) !== -1 &&
-        data.city.toString().trim().toLowerCase().indexOf(searchString.city.toLowerCase()) !== -1 &&
-        data.state.toString().trim().toLowerCase().indexOf(searchString.state.toLowerCase()) !== -1 &&
-        data.bidDate.toString().trim().toLowerCase().indexOf(searchString.bidDate.toLowerCase()) !== -1 &&
-        data.completionDate.toString().trim().toLowerCase().indexOf(searchString.completionDate.toLowerCase()) !== -1 &&
-        data.estimate.toString().trim().toLowerCase().indexOf(searchString.estimate.toLowerCase()) !== -1 &&
-        data.projectOwner.toString().trim().toLowerCase().indexOf(searchString.projectOwner.toLowerCase()) !== -1;
-    };
-    return myFilterPredicate;
+    this.dialog.open(EditProjectModelComponent, {
+      width: '90%',
+      height: '90%',
+      // position: {
+      //   right: '0'
+      // },
+    });
   }
+
 }

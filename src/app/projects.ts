@@ -1,4 +1,5 @@
 export interface Projects {
+    uid?: string;
     projectOwner?: string;
     projectName: string;
     city?: string;

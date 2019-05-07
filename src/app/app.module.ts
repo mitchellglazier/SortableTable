@@ -53,6 +53,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { AddProjectModelComponent } from './add-project-model/add-project-model.component';
 import { ProjectService } from './project.service';
+import { EditProjectModelComponent } from './edit-project-model/edit-project-model.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { ProjectService } from './project.service';
     TableFilteringComponent,
     NotFoundComponent,
     AddProjectModelComponent,
+    EditProjectModelComponent,
   ],
   imports: [
   BrowserModule,
@@ -114,7 +116,8 @@ import { ProjectService } from './project.service';
   providers: [ProjectService],
   bootstrap: [AppComponent],
   entryComponents: [
-    AddProjectModelComponent
+    AddProjectModelComponent,
+    EditProjectModelComponent
   ]
 })
 export class AppModule { }

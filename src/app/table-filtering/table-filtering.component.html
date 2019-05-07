@@ -1,114 +1,119 @@
 <h2>Projects</h2>
-<button (click)="addNewProject()">New</button>
+<button mat-raised-button color="accent" (click)="addNewProject()">New</button>
 
-<mat-table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div> 
+
+<mat-table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
 
   <!-- Project Owner Column -->
   <ng-container matColumnDef="projectOwner">
-    <mat-header-cell *matHeaderCellDef>
-      <div>
-        <mat-form-field>
-          <mat-select class="form-field" [formControl]="projectOwnerFilter" placeholder="Project Owner">
+    <mat-header-cell *matHeaderCellDef>Project Owner
+      <!-- <div> -->
+        <!-- <mat-form-field>
+          <mat-select class="form-field" placeholder="Project Owner">
             <mat-option *ngFor="let projectOwner of projectOwners" [value]="projectOwner">
               {{projectOwner}}
             </mat-option>
           </mat-select>
-        </mat-form-field>
-      </div>
+        </mat-form-field> -->
+      <!-- </div> -->
     </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{ element.projectOwner }} </mat-cell>
   </ng-container>
 
   <!-- Project Name Column -->
   <ng-container matColumnDef="projectName">
-    <mat-header-cell *matHeaderCellDef>
-      <div>
+    <mat-header-cell *matHeaderCellDef>Project Name
+      <!-- <div>
         <mat-form-field>
-          <input matInput class="form-field" [formControl]="projectNameFilter" placeholder="Project Name">
+          <input matInput class="form-field" placeholder="Project Name">
         </mat-form-field>
-      </div>
+      </div> -->
     </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{ element.projectName }} </mat-cell>
   </ng-container>
 
   <!-- City Column -->
   <ng-container matColumnDef="city">
-    <mat-header-cell *matHeaderCellDef>
-      <div>
+    <mat-header-cell *matHeaderCellDef>City
+      <!-- <div>
         <mat-form-field>
-          <input matInput class="form-field" [formControl]="cityFilter" placeholder="City">
+          <input matInput class="form-field" placeholder="City">
         </mat-form-field>
-      </div>
-    </mat-header-cell>
+      </div> -->
+    </mat-header-cell> 
     <mat-cell mat-cell *matCellDef="let element"> {{ element.city }} </mat-cell>
   </ng-container>
 
   <!-- State Column -->
   <ng-container matColumnDef="state">
-    <mat-header-cell *matHeaderCellDef>
-      <div>
+    <mat-header-cell *matHeaderCellDef>State
+      <!-- <div>
         <mat-form-field>
-          <input matInput class="form-field" [formControl]="stateFilter" placeholder="State">
+          <input matInput class="form-field" placeholder="State">
         </mat-form-field>
-      </div>
+      </div> -->
     </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{ element.state }} </mat-cell>
   </ng-container>
 
   <!-- Bid Date Column -->
   <ng-container matColumnDef="bidDate">
-    <mat-header-cell *matHeaderCellDef>
-      <div>
+    <mat-header-cell *matHeaderCellDef>Bid Date
+      <!-- <div>
         <mat-form-field>
-          <input matInput class="form-field" [formControl]="bidDateFilter" placeholder="Bid Date">
+          <input matInput class="form-field" placeholder="Bid Date">
         </mat-form-field>
-      </div>
+      </div> -->
     </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{ element.bidDate }} </mat-cell>
   </ng-container>
 
   <!-- Completion Date Column -->
   <ng-container matColumnDef="completionDate">
-    <mat-header-cell *matHeaderCellDef>
-      <div>
+    <mat-header-cell *matHeaderCellDef>Completion Date
+      <!-- <div>
         <mat-form-field>
-          <input matInput class="form-field" [formControl]="completionDateFilter" placeholder="Est. Completion">
+          <input matInput class="form-field" placeholder="Est. Completion">
         </mat-form-field>
-      </div>
+      </div> -->
     </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{ element.completionDate }} </mat-cell>
   </ng-container>
 
   <!-- Estimate Date Column -->
   <ng-container matColumnDef="estimate">
-    <mat-header-cell *matHeaderCellDef>
-      <div>
+    <mat-header-cell *matHeaderCellDef>Estimate
+      <!-- <div>
         <mat-form-field>
-          <input matInput class="form-field" [formControl]="estimateFilter" placeholder="Estimate">
+          <input matInput class="form-field" placeholder="Estimate">
         </mat-form-field>
-      </div>
+      </div> -->
     </mat-header-cell>
     <mat-cell *matCellDef="let element"> ${{ element.estimate }} </mat-cell>
   </ng-container>
 
   <!-- Stage Column -->
   <ng-container matColumnDef="stage">
-    <mat-header-cell *matHeaderCellDef>
-      <div>
+    <mat-header-cell *matHeaderCellDef>Stage
+      <!-- <div>
         <mat-form-field>
-          <mat-select class="form-field" [formControl]="stageFilter" placeholder="Stage">
+          <mat-select class="form-field" placeholder="Stage">
             <mat-option *ngFor="let stage of stages" [value]="stage">
               {{stage}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-      </div>
+      </div> -->
     </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{ element.stage }} </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-row mat-row *matRowDef="let row; columns: displayedColumns;"
+  (click)="editProject(row)"></mat-row>
 </mat-table>
-
-<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

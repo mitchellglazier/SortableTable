@@ -1,0 +1,24 @@
+<mat-grid-list class="columns" cols="3">
+    <mat-grid-tile class="column-text">
+        <h3>Project Details</h3>
+    </mat-grid-tile>
+    
+    <mat-divider [vertical]="true"></mat-divider>
+    
+    <mat-grid-tile>
+        <h3>Companies</h3>
+    </mat-grid-tile>
+    
+    <mat-divider [vertical]="true"></mat-divider>
+    
+    <mat-grid-tile>
+        <h3>Project Activity</h3>
+    </mat-grid-tile>
+
+</mat-grid-list>
+
+<div mat-dialog-actions>
+    <button mat-raised-button color='primary' mat-button (click)="submit()">Submit</button>
+    <button mat-raised-button color='accent' mat-button (click)="close()">Cancel</button>
+</div>
+
