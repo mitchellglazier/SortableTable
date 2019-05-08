@@ -22,4 +22,22 @@ table {
     min-width: 300px;
   }
 
+  .column-border {
+      border-right: 3px solid gray;
+  }
+
+  .column-border-header {
+    border-bottom: 1px solid gray;
+  }
+
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
   

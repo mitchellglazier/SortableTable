@@ -11,8 +11,8 @@ export class ProjectService {
     return this.db.list('/projects').push(project);
   }
 
-  // getAll() {
-  //   this.db.list<any>('/projects').valueChanges();
-  // }
+  getAllProjects() {
+    return this.db.list('/projects');
+  }
 
 }

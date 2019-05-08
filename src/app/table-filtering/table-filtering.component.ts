@@ -3,6 +3,7 @@ import { MatDialog, MatTableDataSource, MatDialogConfig } from '@angular/materia
 import { AddProjectModelComponent } from '../add-project-model/add-project-model.component';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { EditProjectModelComponent } from '../edit-project-model/edit-project-model.component';
+import { ProjectService } from '../project.service';
 
 @Component({
   selector: 'app-table-filtering',
@@ -40,9 +41,11 @@ export class TableFilteringComponent {
 
   dataSource: MatTableDataSource<any>;
 
-  constructor(public dialog: MatDialog, private db: AngularFireDatabase) {
-    this.db.list<any>('/projects').valueChanges().subscribe(data => {
-      this.dataSource = new MatTableDataSource(data);
+  constructor(
+    public dialog: MatDialog,
+    private projectService: ProjectService) {
+    this.projectService.getAllProjects().valueChanges().subscribe(data => {
+    this.dataSource = new MatTableDataSource(data);
     });
   }
 
@@ -67,9 +70,6 @@ export class TableFilteringComponent {
     this.dialog.open(EditProjectModelComponent, {
       width: '90%',
       height: '90%',
-      // position: {
-      //   right: '0'
-      // },
     });
   }
 

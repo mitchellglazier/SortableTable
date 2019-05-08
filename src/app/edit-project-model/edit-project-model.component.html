@@ -1,18 +1,73 @@
-<mat-grid-list class="columns" cols="3">
-    <mat-grid-tile class="column-text">
-        <h3>Project Details</h3>
+<mat-grid-list class="columns" cols="3" rowHeight="94%">
+
+    <mat-grid-tile class="column-border">
+        <mat-grid-tile-header class="column-border-header">
+            <h3>Project Details</h3>
+        </mat-grid-tile-header>
+        <form #f="ngForm" (ngSubmit)="submit(f.value)" class="example-form">
+
+                <mat-form-field class="example-full-width">
+                  <mat-select ngModel name="projectOwner" #projectOwner="ngModel" matInput placeholder="Project Owner">
+                    <mat-option *ngFor="let projectOwner of projectOwners" [value]="projectOwner">
+                    {{projectOwner}}
+                  </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              
+                <mat-form-field class="example-full-width">
+                  <input required ngModel name="projectName" #projectName="ngModel" matInput placeholder="Project Name">
+                </mat-form-field>
+              
+                <mat-form-field class="example-full-width">
+                  <input ngModel name="city" #city="ngModel" matInput placeholder="City">
+                </mat-form-field>
+              
+                <mat-form-field class="example-full-width">
+                  <input ngModel name="state" #state="ngModel" matInput placeholder="State">
+                </mat-form-field>
+              
+                <mat-form-field class="example-full-width">
+                  <input ngModel name="bidDate" #bidDate="ngModel" matInput [matDatepicker]="bidDate" placeholder="Bid Date">
+                  <mat-datepicker-toggle matSuffix [for]="bidDate"></mat-datepicker-toggle>
+                  <mat-datepicker #bidDate></mat-datepicker>
+                </mat-form-field>
+              
+                <mat-form-field class="example-full-width">
+                  <input ngModel name="completionDate" #completionDate="ngModel" matInput [matDatepicker]="completionDate" placeholder="Est. Completion">
+                  <mat-datepicker-toggle matSuffix [for]="completionDate"></mat-datepicker-toggle>
+                  <mat-datepicker #completionDate></mat-datepicker>
+                </mat-form-field>
+              
+                <mat-form-field class="example-full-width">
+                  <span matPrefix>$ &nbsp;</span>
+                  <input ngModel name="estimate" #estimate="ngModel" matInput placeholder="Estimate" type="number">
+                </mat-form-field>
+              
+                <mat-form-field class="example-full-width">
+                  <mat-select ngModel name="stage" #stage="ngModel" matInput placeholder="Stage">
+                    <mat-option *ngFor="let stage of stages" [value]="stage">
+                      {{stage}}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                            
+              </form>
     </mat-grid-tile>
-    
-    <mat-divider [vertical]="true"></mat-divider>
-    
-    <mat-grid-tile>
-        <h3>Companies</h3>
+
+
+    <mat-grid-tile class="column-border">
+        <mat-grid-tile-header class="column-border-header">
+            <h3>Companies</h3>
+        </mat-grid-tile-header>
+        <p>stuff n stuff</p>
     </mat-grid-tile>
-    
-    <mat-divider [vertical]="true"></mat-divider>
-    
+
+
     <mat-grid-tile>
-        <h3>Project Activity</h3>
+        <mat-grid-tile-header class="column-border-header">
+            <h3>Project Activity</h3>
+        </mat-grid-tile-header>
+        <p>It is what it is</p>
     </mat-grid-tile>
 
 </mat-grid-list>
